@@ -10,10 +10,10 @@ int main(int argc, char **argv)
 	MPI_Status stats[4];
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	prev = rank - 1; //Предыдущий равен предыдущему процессу
-	next = rank + 1; //Последующий равен последующему процессу
-	if (rank == 0) prev = size - 1; //Если прцесс = 0 то предыдущий равен последнему процессу
-	if (rank == size - 1) next = 0; //Если процесс последний, то следующий равен нулевому процессу
+	prev = rank - 1;
+	next = rank + 1;
+	if (rank == 0) prev = size - 1;
+	if (rank == size - 1) next = 0;
 	MPI_Irecv(&buf[0], 1, MPI_INT, prev, 5, MPI_COMM_WORLD, &reqs[0]);
 	MPI_Irecv(&buf[1], 1, MPI_INT, next, 6, MPI_COMM_WORLD, &reqs[1]);
 	MPI_Isend(&rank, 1, MPI_INT, prev, 6, MPI_COMM_WORLD, &reqs[2]);
