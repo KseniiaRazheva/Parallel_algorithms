@@ -1,0 +1,29 @@
+#include <iostream>
+#include "mpi.h"
+using namespace std;
+int main(int argc, char **argv)
+{
+	int rank, size, prev, next;
+	int buf[2];
+	MPI_Init(&argc, &argv);
+	MPI_Request reqs[4];
+	MPI_Status stats[4];
+	MPI_Comm_size(MPI_COMM_WORLD, &size);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	prev = rank - 1; //Предыдущий равен предыдущему процессу
+	next = rank + 1; //Последующий равен последующему процессу
+	if (rank == 0) prev = size - 1; //Если прцесс = 0 то предыдущий равен последнему процессу
+	if (rank == size - 1) next = 0; //Если процесс последний, то следующий равен нулевому процессу
+	MPI_Irecv(&buf[0], 1, MPI_INT, prev, 5, MPI_COMM_WORLD, &reqs[0]);
+	MPI_Irecv(&buf[1], 1, MPI_INT, next, 6, MPI_COMM_WORLD, &reqs[1]);
+	MPI_Isend(&rank, 1, MPI_INT, prev, 6, MPI_COMM_WORLD, &reqs[2]);
+	MPI_Isend(&rank, 1, MPI_INT, next, 5, MPI_COMM_WORLD, &reqs[3]);
+	MPI_Waitall(4, reqs, stats);
+	
+	//Your code here.
+	//Here you need to display the number of the current process, and what it receives from the previous and next processes.
+	cout << "Rank " << rank << " receives from previous process " << prev << " this: " << buf[0];
+	cout << " and receives from next process " << next << " this: " << buf[1] << endl;
+	
+	MPI_Finalize();
+}
