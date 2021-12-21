@@ -15,8 +15,8 @@ int main(int argc, char **argv)
 	if (rank == 0) prev = size - 1;
 	if (rank == size - 1) next = 0;
 
-	MPI_Sendrecv(&rank, 1, MPI_INT, prev, 6, &buf[1], 1, MPI_INT, next, 6, MPI_COMM_WORLD, &status[0]);
 	MPI_Sendrecv(&rank, 1, MPI_INT, next, 6, &buf[0], 1, MPI_INT, prev, 6, MPI_COMM_WORLD, &status[1]);
+	MPI_Sendrecv(&rank, 1, MPI_INT, prev, 6, &buf[1], 1, MPI_INT, next, 6, MPI_COMM_WORLD, &status[0]);
 
 	cout << "Rank " << rank << " receives from previous process " << prev << " this: " << buf[0];
 	cout << " and receives from next process " << next << " this: " << buf[1] << endl;
