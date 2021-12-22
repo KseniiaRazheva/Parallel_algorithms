@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	MPI_Comm_split(MPI_COMM_WORLD, rank % 2, size - rank, &comm_revs);
 	MPI_Comm_rank(comm_revs, &rank1);
 	//Display rank and rank1
-	cout << "Rank is " << rank << ", rank1 is " << rank1 << ", rank % 2 is " << rank % 2 << endl;
+	cout << "Rank is " << rank << ", rank1 is " << rank1 << endl;
 	MPI_Comm_free(&comm_revs);
 	MPI_Finalize();
 }
