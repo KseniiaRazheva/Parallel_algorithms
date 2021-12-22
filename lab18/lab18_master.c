@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 	int run_process;
 	MPI_Status status;
 	MPI_Comm intercomm;
-	char slave[20] = "./slave.o";
+	char slave[10] = "./slave.o";
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_spawn(slave, MPI_ARGV_NULL, 3, MPI_INFO_NULL, 0, MPI_COMM_SELF, &intercomm, MPI_ERRCODES_IGNORE);
