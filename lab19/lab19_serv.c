@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 	MPI_Recv(m, 2, MPI_CHAR, 0, 0, intercomm, &status);
 	MPI_Comm_free(&intercomm);
 	MPI_Close_port(port_name);
-	printf("Клиент отправил %d\n", r);
+	printf("Клиент отправил %d\n", m);
 	MPI_Finalize();
 	return 0;
 }
